@@ -1,15 +1,13 @@
-package bUtils
+package main
 
 import (
 	"io"
 	"log"
 	"os"
-	"path/filepath"
 )
 
 func CopyFile(originFilepath, destinationFilepath string) error {
 	var err error
-	filename := filepath.Base(originFilepath)
 
 	// Open the local file
 	original, err := os.Open(originFilepath)
@@ -18,32 +16,31 @@ func CopyFile(originFilepath, destinationFilepath string) error {
 		return err
 	}
 
-	// Create new file in serverFolder
-	serverFilepath := filepath.Join(destinationFilepath, filename)
-	newFile, err := os.Create(serverFilepath)
+	// Create new file for destination
+	newFile, err := os.Create(destinationFilepath)
 	if err != nil {
-		log.Printf("Unable to create originFilepath: %s | Error: %s\n", serverFilepath, err)
+		log.Printf("Unable to create destinationFilepath: %s | Error: %s\n", destinationFilepath, err)
 		return err
 	}
 
 	// Copy data from origin to destination file
 	_, err = io.Copy(newFile, original)
 	if err != nil {
-		log.Printf("Unable to copy originFilepath: %s to destinationFilepath: %s | Error: %s", originFilepath, destinationFilepath, err)
+		log.Printf("Unable to copy originFilepath: %s to destinationFilepath: %s | Error: %s\n", originFilepath, destinationFilepath, err)
 		return err
 	} else {
-		log.Printf("Copied %s to %s \n", filename, destinationFilepath)
+		log.Printf("Copied %s to %s\n", originFilepath, destinationFilepath)
 	}
 
 	// Close files
 	err = original.Close()
 	if err != nil {
-		log.Printf("Unable to close %s. Error: %s", destinationFilepath, err)
+		log.Printf("Unable to close %s | Error: %s\n", destinationFilepath, err)
 		return err
 	}
 	err = newFile.Close()
 	if err != nil {
-		log.Printf("Unable to close %s. Error: %s", serverFilepath, err)
+		log.Printf("Unable to close %s | Error: %s\n", destinationFilepath, err)
 		return err
 	}
 	return err

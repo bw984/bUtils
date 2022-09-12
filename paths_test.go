@@ -1,4 +1,4 @@
-package bUtils
+package main
 
 import "testing"
 
