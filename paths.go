@@ -6,6 +6,8 @@ import (
 	"strings"
 )
 
+// Parents trims the right side of a path backwards, if a filepath is input with levels=0 the parent folder will be given
+// similar to the filepath.Dir function.  If a folder path is input with levels=0 the parent folder will be the return
 func Parents(pathToTrim string, levels int) string {
 	forwardSlashes := strings.Replace(pathToTrim, "\\", "/", -1)
 	cleaned := filepath.Clean(forwardSlashes)
